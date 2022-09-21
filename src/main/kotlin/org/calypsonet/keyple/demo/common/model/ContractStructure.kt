@@ -25,4 +25,6 @@ data class ContractStructure(
     val contractSaleCounter: Int?,
     val contractAuthKvc: Int?,
     val contractAuthenticator: Int?
-) : Serializable
+) : Serializable {
+  var counterValue: Int? = null
+}
