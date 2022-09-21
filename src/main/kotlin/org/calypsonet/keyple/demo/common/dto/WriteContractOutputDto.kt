@@ -9,11 +9,15 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ************************************************************************************** */
-package org.calypsonet.keyple.demo.common.parser
+package org.calypsonet.keyple.demo.common.dto
 
-interface Parser<T> {
-
-  fun parse(content: ByteArray): T
-
-  fun generate(content: T): ByteArray
+class WriteContractOutputDto {
+  /**
+   * Status code
+   * - 0 successful
+   * - 1 server is not ready
+   * - 2 card rejected
+   * - 3 please present the same card
+   */
+  var statusCode: Int? = null
 }

@@ -9,11 +9,24 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ************************************************************************************** */
-package org.calypsonet.keyple.demo.common.parser
+package org.calypsonet.keyple.demo.common.model.type
 
-interface Parser<T> {
+enum class PriorityCode constructor(val key: Int, val value: String) {
+  FORBIDDEN(0, "Forbidden (present in clean records only)"),
+  SEASON_PASS(1, "Season Pass"),
+  MULTI_TRIP(2, "Multi-trip ticket"),
+  STORED_VALUE(3, "Stored Value"),
+  EXPIRED(31, "Expired"),
+  UNKNOWN(-1, "Unknown");
 
-  fun parse(content: ByteArray): T
-
-  fun generate(content: T): ByteArray
+  companion object {
+    fun findEnumByKey(key: Int): PriorityCode {
+      for (contractPriority in values()) {
+        if (contractPriority.key == key) {
+          return contractPriority
+        }
+      }
+      return UNKNOWN
+    }
+  }
 }

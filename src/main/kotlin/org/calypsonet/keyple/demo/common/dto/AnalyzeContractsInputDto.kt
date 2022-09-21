@@ -9,8 +9,8 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ************************************************************************************** */
-package org.calypsonet.keyple.demo.common.parser.model
+package org.calypsonet.keyple.demo.common.dto
 
-import java.io.Serializable
-
-data class CardCounter(val counterValue: Int) : Serializable
+class AnalyzeContractsInputDto {
+  var pluginType: String? = null
+}

@@ -9,30 +9,20 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ************************************************************************************** */
-package org.calypsonet.keyple.demo.common.parser.model
+package org.calypsonet.keyple.demo.common.model
 
 import java.io.Serializable
-import java.util.Date
-import org.calypsonet.keyple.demo.common.parser.model.constant.ContractPriority
-import org.calypsonet.keyple.demo.common.parser.model.constant.VersionNumber
-import org.calypsonet.keyple.demo.common.parser.util.DateUtil
+import org.calypsonet.keyple.demo.common.model.type.DateCompact
+import org.calypsonet.keyple.demo.common.model.type.PriorityCode
+import org.calypsonet.keyple.demo.common.model.type.VersionNumber
 
-data class CardContract(
+data class ContractStructure(
     val contractVersionNumber: VersionNumber,
-    val contractTariff: ContractPriority,
-    val contractSaleDate: Int,
-    val contractValidityEndDate: Int,
+    val contractTariff: PriorityCode,
+    val contractSaleDate: DateCompact,
+    val contractValidityEndDate: DateCompact,
     val contractSaleSam: Int?,
     val contractSaleCounter: Int?,
     val contractAuthKvc: Int?,
     val contractAuthenticator: Int?
-) : Serializable {
-
-  fun getContractSaleDateAsDate(): Date {
-    return DateUtil.parseDateStamp(contractSaleDate, DateUtil.DATE_01_01_2010)
-  }
-
-  fun getContractValidityEndDateAsDate(): Date {
-    return DateUtil.parseDateStamp(contractValidityEndDate, DateUtil.DATE_01_01_2010)
-  }
-}
+) : Serializable

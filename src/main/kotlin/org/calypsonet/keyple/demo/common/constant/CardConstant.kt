@@ -9,11 +9,10 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ************************************************************************************** */
-package org.calypsonet.keyple.demo.common.parser
+package org.calypsonet.keyple.demo.common.constant
 
-interface Parser<T> {
-
-  fun parse(content: ByteArray): T
-
-  fun generate(content: T): ByteArray
+object CardConstant {
+  const val ENVIRONMENT_HOLDER_RECORD_SIZE_BYTES = 29
+  const val CONTRACT_RECORD_SIZE_BYTES = 29
+  const val EVENT_RECORD_SIZE_BYTES = 29
 }

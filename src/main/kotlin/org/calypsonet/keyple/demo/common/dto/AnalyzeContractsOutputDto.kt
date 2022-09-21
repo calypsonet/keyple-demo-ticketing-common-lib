@@ -9,11 +9,20 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ************************************************************************************** */
-package org.calypsonet.keyple.demo.common.parser
+package org.calypsonet.keyple.demo.common.dto
 
-interface Parser<T> {
+import org.calypsonet.keyple.demo.common.model.ContractStructure
 
-  fun parse(content: ByteArray): T
+class AnalyzeContractsOutputDto {
 
-  fun generate(content: T): ByteArray
+  /** List of contracts present in the card. Each contract is tied to a counter by its index. */
+  var validContracts: List<ContractStructure>? = null
+
+  /**
+   * Status code
+   * - 0 if successful
+   * - 1 server is not ready
+   * - 2 card rejected
+   */
+  var statusCode: Int? = null
 }

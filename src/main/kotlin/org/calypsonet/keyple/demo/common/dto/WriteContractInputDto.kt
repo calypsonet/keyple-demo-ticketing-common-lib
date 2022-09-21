@@ -9,11 +9,12 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ************************************************************************************** */
-package org.calypsonet.keyple.demo.common.parser
+package org.calypsonet.keyple.demo.common.dto
 
-interface Parser<T> {
+import org.calypsonet.keyple.demo.common.model.type.PriorityCode
 
-  fun parse(content: ByteArray): T
-
-  fun generate(content: T): ByteArray
+class WriteContractInputDto {
+  var contractTariff: PriorityCode? = null
+  var ticketToLoad: Int? = null
+  var pluginType: String? = null
 }

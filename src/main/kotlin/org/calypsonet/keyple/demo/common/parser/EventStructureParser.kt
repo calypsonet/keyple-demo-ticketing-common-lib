@@ -12,54 +12,32 @@
 package org.calypsonet.keyple.demo.common.parser
 
 import fr.devnied.bitlib.BitUtils
-import fr.devnied.bitlib.BytesUtils
 import java.math.BigInteger
-import org.calypsonet.keyple.demo.common.parser.model.CardEvent
-import org.calypsonet.keyple.demo.common.parser.model.constant.ContractPriority
+import org.calypsonet.keyple.demo.common.model.EventStructure
+import org.calypsonet.keyple.demo.common.model.type.DateCompact
+import org.calypsonet.keyple.demo.common.model.type.PriorityCode
+import org.calypsonet.keyple.demo.common.model.type.TimeCompact
+import org.calypsonet.keyple.demo.common.model.type.VersionNumber
 
-class CardEventParser : Parser<CardEvent> {
+class EventStructureParser : Parser<EventStructure> {
 
-  override fun parse(content: ByteArray): CardEvent {
-
+  override fun parse(content: ByteArray): EventStructure {
     val bitUtils = BitUtils(content)
-    bitUtils.currentBitIndex = 0
-
-    /*
-     * eventVersionNumber
-     */
-    val eventVersionNumber = bitUtils.getNextInteger(EVENT_VERSION_NUMBER_SIZE)
-
-    /*
-     * eventDateStamp & eventTimeStamp
-     */
-    val eventDateStamp = bitUtils.getNextInteger(EVENT_DATE_STAMP_SIZE)
-    val eventTimeStamp = bitUtils.getNextInteger(EVENT_TIME_STAMP_SIZE)
-
-    /*
-     * eventLocation
-     */
+    val eventVersionNumber =
+        VersionNumber.findEnumByKey(bitUtils.getNextInteger(EVENT_VERSION_NUMBER_SIZE))
+    val eventDateStamp = DateCompact(bitUtils.getNextInteger(EVENT_DATE_STAMP_SIZE))
+    val eventTimeStamp = TimeCompact(bitUtils.getNextInteger(EVENT_TIME_STAMP_SIZE))
     val eventLocation = bitUtils.getNextInteger(EVENT_LOCATION_SIZE)
-    BytesUtils.bytesToString(bitUtils.data)
-
-    /*
-     * eventContractUsed
-     */
     val eventContractUsed = bitUtils.getNextInteger(EVENT_CONTRACT_USED_SIZE)
-    BytesUtils.bytesToString(bitUtils.data)
-
-    /*
-     * contractPriority
-     */
     val contractPriority1 =
-        ContractPriority.findEnumByKey(bitUtils.getNextInteger(EVENT_CONTRACT_PRIORITY_SIZE))
+        PriorityCode.findEnumByKey(bitUtils.getNextInteger(EVENT_CONTRACT_PRIORITY_SIZE))
     val contractPriority2 =
-        ContractPriority.findEnumByKey(bitUtils.getNextInteger(EVENT_CONTRACT_PRIORITY_SIZE))
+        PriorityCode.findEnumByKey(bitUtils.getNextInteger(EVENT_CONTRACT_PRIORITY_SIZE))
     val contractPriority3 =
-        ContractPriority.findEnumByKey(bitUtils.getNextInteger(EVENT_CONTRACT_PRIORITY_SIZE))
+        PriorityCode.findEnumByKey(bitUtils.getNextInteger(EVENT_CONTRACT_PRIORITY_SIZE))
     val contractPriority4 =
-        ContractPriority.findEnumByKey(bitUtils.getNextInteger(EVENT_CONTRACT_PRIORITY_SIZE))
-
-    return CardEvent(
+        PriorityCode.findEnumByKey(bitUtils.getNextInteger(EVENT_CONTRACT_PRIORITY_SIZE))
+    return EventStructure(
         eventVersionNumber = eventVersionNumber,
         eventDateStamp = eventDateStamp,
         eventTimeStamp = eventTimeStamp,
@@ -71,39 +49,22 @@ class CardEventParser : Parser<CardEvent> {
         contractPriority4 = contractPriority4)
   }
 
-  override fun generate(content: CardEvent): ByteArray {
+  override fun generate(content: EventStructure): ByteArray {
     val bitUtils = BitUtils(EVENT_SIZE)
-
-    /*
-     * eventVersionNumber
-     */
     bitUtils.setNextByte(
-        BigInteger.valueOf(content.eventVersionNumber.toLong()).toByteArray(),
+        BigInteger.valueOf(content.eventVersionNumber.key.toLong()).toByteArray(),
         EVENT_VERSION_NUMBER_SIZE)
-
-    /*
-     * eventDateStamp & eventTimeStamp
-     */
     bitUtils.setNextByte(
-        BigInteger.valueOf(content.eventDateStamp.toLong()).toByteArray(), EVENT_DATE_STAMP_SIZE)
+        BigInteger.valueOf(content.eventDateStamp.value.toLong()).toByteArray(),
+        EVENT_DATE_STAMP_SIZE)
     bitUtils.setNextByte(
-        BigInteger.valueOf(content.eventTimeStamp.toLong()).toByteArray(), EVENT_TIME_STAMP_SIZE)
-
-    /*
-     * eventLocation
-     */
+        BigInteger.valueOf(content.eventTimeStamp.value.toLong()).toByteArray(),
+        EVENT_TIME_STAMP_SIZE)
     bitUtils.setNextByte(
         BigInteger.valueOf(content.eventLocation.toLong()).toByteArray(), EVENT_LOCATION_SIZE)
-
-    /*
-     * eventContractUsed
-     */
     bitUtils.setNextByte(
         BigInteger.valueOf(content.eventContractUsed.toLong()).toByteArray(),
         EVENT_CONTRACT_USED_SIZE)
-    /*
-     * contractPriority
-     */
     bitUtils.setNextByte(
         BigInteger.valueOf(content.contractPriority1.key.toLong()).toByteArray(),
         EVENT_CONTRACT_PRIORITY_SIZE)
@@ -116,18 +77,12 @@ class CardEventParser : Parser<CardEvent> {
     bitUtils.setNextByte(
         BigInteger.valueOf(content.contractPriority4.key.toLong()).toByteArray(),
         EVENT_CONTRACT_PRIORITY_SIZE)
-
-    /*
-     * Padding
-     */
     bitUtils.setNextByte(BigInteger.valueOf(0).toByteArray(), EVENT_PADDING)
-
     return bitUtils.data
   }
 
   companion object {
     const val EVENT_SIZE = 232
-
     const val EVENT_VERSION_NUMBER_SIZE = 8
     const val EVENT_DATE_STAMP_SIZE = 16
     const val EVENT_TIME_STAMP_SIZE = 16

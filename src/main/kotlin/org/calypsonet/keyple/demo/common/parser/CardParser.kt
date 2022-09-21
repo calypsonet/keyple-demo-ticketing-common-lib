@@ -11,43 +11,31 @@
  ************************************************************************************** */
 package org.calypsonet.keyple.demo.common.parser
 
+import org.calypsonet.keyple.demo.common.model.CardStructure
+import org.calypsonet.keyple.demo.common.model.ContractStructure
+import org.calypsonet.keyple.demo.common.model.EventStructure
 import org.calypsonet.keyple.demo.common.parser.dto.CardDto
-import org.calypsonet.keyple.demo.common.parser.model.Card
-import org.calypsonet.keyple.demo.common.parser.model.CardContract
-import org.calypsonet.keyple.demo.common.parser.model.CardEvent
 
-class CardParser : Parser<Card?> {
+class CardParser : Parser<CardStructure?> {
 
-  fun parseCardlet(cardlet: CardDto): Card {
+  fun parseCardlet(cardlet: CardDto): CardStructure {
 
-    /*
-     * Parse environment
-     */
-    val environment = CardEnvironmentHolderParser().parse(cardlet.envData)
+    val environment = EnvironmentHolderStructureParser().parse(cardlet.envData)
 
-    /*
-     * Parse cardContracts
-     */
-    val cardContracts = mutableListOf<CardContract>()
-    cardlet.contractData.forEach { cardContracts.add(CardContractParser().parse(it)) }
+    val contractStructures = mutableListOf<ContractStructure>()
+    cardlet.contractData.forEach { contractStructures.add(ContractStructureParser().parse(it)) }
 
-    /*
-     * Parse cardEvents
-     */
-    val cardEvents = mutableListOf<CardEvent>()
-    cardlet.eventData.forEach { cardEvents.add(CardEventParser().parse(it)) }
+    val eventStructures = mutableListOf<EventStructure>()
+    cardlet.eventData.forEach { eventStructures.add(EventStructureParser().parse(it)) }
 
-    /*
-     * Parse cardCounter
-     */
-    val counter = cardlet.counterData?.let { CardCounterParser().parse(it) }
+    val counter = cardlet.counterData?.let { CounterStructureParser().parse(it) }
 
-    return Card(environment, cardContracts, cardEvents, counter)
+    return CardStructure(environment, contractStructures, eventStructures, counter)
   }
 
-  override fun generate(content: Card?): ByteArray {
+  override fun generate(content: CardStructure?): ByteArray {
     TODO("Not yet implemented")
   }
 
-  override fun parse(content: ByteArray): Card? = null
+  override fun parse(content: ByteArray): CardStructure? = null
 }

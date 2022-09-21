@@ -9,11 +9,11 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ************************************************************************************** */
-package org.calypsonet.keyple.demo.common.parser
+package org.calypsonet.keyple.demo.common.model
 
-interface Parser<T> {
-
-  fun parse(content: ByteArray): T
-
-  fun generate(content: T): ByteArray
-}
+data class CardStructure(
+    val environmentHolderStructure: EnvironmentHolderStructure,
+    val contractStructures: MutableList<ContractStructure>,
+    val eventStructures: MutableList<EventStructure>,
+    val counterStructure: CounterStructure?
+)

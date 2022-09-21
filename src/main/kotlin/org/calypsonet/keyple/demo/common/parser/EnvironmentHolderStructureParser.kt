@@ -13,106 +13,52 @@ package org.calypsonet.keyple.demo.common.parser
 
 import fr.devnied.bitlib.BitUtils
 import java.math.BigInteger
-import org.calypsonet.keyple.demo.common.parser.model.CardEnvironmentHolder
+import org.calypsonet.keyple.demo.common.model.EnvironmentHolderStructure
+import org.calypsonet.keyple.demo.common.model.type.DateCompact
+import org.calypsonet.keyple.demo.common.model.type.VersionNumber
 
-class CardEnvironmentHolderParser : Parser<CardEnvironmentHolder> {
+class EnvironmentHolderStructureParser : Parser<EnvironmentHolderStructure> {
 
-  override fun parse(content: ByteArray): CardEnvironmentHolder {
-
+  override fun parse(content: ByteArray): EnvironmentHolderStructure {
     val bitUtils = BitUtils(content)
-    bitUtils.currentBitIndex = 0
-
-    /*
-     * envVersionNumber
-     */
-    val envVersionNumber = bitUtils.getNextInteger(ENV_EVN_SIZE)
-
-    /*
-     * envApplicationNumber
-     */
+    val envVersionNumber = VersionNumber.findEnumByKey(bitUtils.getNextInteger(ENV_EVN_SIZE))
     val envApplicationNumber = bitUtils.getNextInteger(ENV_AVN_SIZE)
-
-    /*
-     * envIssuingDate
-     */
-    val envIssuingDate = bitUtils.getNextInteger(ENV_ISSUING_DATE_SIZE)
-
-    /*
-     * envEndDate
-     */
-    val envEndDate = bitUtils.getNextInteger(ENV_END_DATE_SIZE)
-
-    /*
-     * holderCompany
-     */
+    val envIssuingDate = DateCompact(bitUtils.getNextInteger(ENV_ISSUING_DATE_SIZE))
+    val envEndDate = DateCompact(bitUtils.getNextInteger(ENV_END_DATE_SIZE))
     val holderCompany = bitUtils.getNextInteger(ENV_HOLDER_COMPANY_SIZE)
-
-    /*
-     * holderIdNumber
-     */
     val holderIdNumber = bitUtils.getNextInteger(ENV_HOLDER_ID_NUMBER_SIZE)
-
-    return CardEnvironmentHolder(
+    return EnvironmentHolderStructure(
         envVersionNumber = envVersionNumber,
         envApplicationNumber = envApplicationNumber,
-        envEndDate = envEndDate,
         envIssuingDate = envIssuingDate,
+        envEndDate = envEndDate,
         holderCompany = holderCompany,
         holderIdNumber = holderIdNumber)
   }
 
-  override fun generate(content: CardEnvironmentHolder): ByteArray {
-
+  override fun generate(content: EnvironmentHolderStructure): ByteArray {
     val bitUtils = BitUtils(ENV_SIZE)
-    /*
-     * envVersionNumber
-     */
     bitUtils.setNextByte(
-        BigInteger.valueOf(content.envVersionNumber.toLong()).toByteArray(), ENV_EVN_SIZE)
-
-    /*
-     * envApplicationNumber
-     */
+        BigInteger.valueOf(content.envVersionNumber.key.toLong()).toByteArray(), ENV_EVN_SIZE)
     bitUtils.setNextByte(
         BigInteger.valueOf(content.envApplicationNumber.toLong()).toByteArray(), ENV_AVN_SIZE)
-
-    /*
-     * envIssuingDate
-     */
     bitUtils.setNextByte(
-        BigInteger.valueOf(content.envIssuingDate.toLong()).toByteArray(), ENV_ISSUING_DATE_SIZE)
-
-    /*
-     * envEndDate
-     */
+        BigInteger.valueOf(content.envIssuingDate.value.toLong()).toByteArray(),
+        ENV_ISSUING_DATE_SIZE)
     bitUtils.setNextByte(
-        BigInteger.valueOf(content.envEndDate.toLong()).toByteArray(), ENV_END_DATE_SIZE)
-
-    /*
-     * holderCompany
-     */
-    val holderCompany = content.holderCompany ?: 0
+        BigInteger.valueOf(content.envEndDate.value.toLong()).toByteArray(), ENV_END_DATE_SIZE)
     bitUtils.setNextByte(
-        BigInteger.valueOf(holderCompany.toLong()).toByteArray(), ENV_HOLDER_COMPANY_SIZE)
-
-    /*
-     * holderIdNumber
-     */
-    val holderIdNumber = content.holderIdNumber ?: 0
+        BigInteger.valueOf((content.holderCompany ?: 0).toLong()).toByteArray(),
+        ENV_HOLDER_COMPANY_SIZE)
     bitUtils.setNextByte(
-        BigInteger.valueOf(holderIdNumber.toLong()).toByteArray(), ENV_HOLDER_ID_NUMBER_SIZE)
-
-    /*
-     * padding
-     */
+        BigInteger.valueOf((content.holderIdNumber ?: 0).toLong()).toByteArray(),
+        ENV_HOLDER_ID_NUMBER_SIZE)
     bitUtils.setNextByte(BigInteger.valueOf(0).toByteArray(), ENV_PADDING)
-
     return bitUtils.data
   }
 
   companion object {
     const val ENV_SIZE = 232
-
     const val ENV_EVN_SIZE = 8
     const val ENV_AVN_SIZE = 32
     const val ENV_ISSUING_DATE_SIZE = 16

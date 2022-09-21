@@ -15,13 +15,14 @@ import fr.devnied.bitlib.BytesUtils
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import org.assertj.core.api.Assertions.assertThat
-import org.calypsonet.keyple.demo.common.parser.model.CardEnvironmentHolder
-import org.calypsonet.keyple.demo.common.parser.util.DateUtil
+import org.calypsonet.keyple.demo.common.model.EnvironmentHolderStructure
+import org.calypsonet.keyple.demo.common.model.type.DateCompact
+import org.calypsonet.keyple.demo.common.model.type.VersionNumber
 import org.junit.jupiter.api.Test
 
-class CardEnvironmentHolderParserTest {
+class EnvironmentHolderStructureParserTest {
 
-  private val envParser = CardEnvironmentHolderParser()
+  private val envParser = EnvironmentHolderStructureParser()
   private val sdf: SimpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
 
   @Test
@@ -31,12 +32,12 @@ class CardEnvironmentHolderParserTest {
     val environment = envParser.parse(content)
 
     assertThat(environment).isNotNull
-    assertThat(environment.envVersionNumber).isEqualTo(9)
+    assertThat(environment.envVersionNumber).isEqualTo(VersionNumber.CURRENT_VERSION)
     assertThat(environment.envApplicationNumber).isEqualTo(1)
-    assertThat(environment.envIssuingDate).isEqualTo(4091)
-    assertThat(environment.envEndDate).isEqualTo(7314)
-    assertThat(environment.getEnvIssuingDateAsDate()).isEqualTo(sdf.parse("15/03/2021"))
-    assertThat(environment.getEnvEndDateAsDate()).isEqualTo(sdf.parse("10/01/2030"))
+    assertThat(environment.envIssuingDate.value).isEqualTo(4091)
+    assertThat(environment.envEndDate.value).isEqualTo(7314)
+    assertThat(environment.envIssuingDate.date).isEqualTo(sdf.parse("15/03/2021"))
+    assertThat(environment.envEndDate.date).isEqualTo(sdf.parse("10/01/2030"))
     assertThat(environment.holderCompany).isEqualTo(7)
     assertThat(environment.holderIdNumber).isEqualTo(8)
   }
@@ -54,15 +55,15 @@ class CardEnvironmentHolderParserTest {
     val envEndDate = calendar.time
 
     val environment =
-        CardEnvironmentHolder(
-            envVersionNumber = 9,
+        EnvironmentHolderStructure(
+            envVersionNumber = VersionNumber.CURRENT_VERSION,
             envApplicationNumber = 1,
-            envIssuingDate = DateUtil.dateToDateCompact(envIssuingDate),
-            envEndDate = DateUtil.dateToDateCompact(envEndDate),
+            envIssuingDate = DateCompact(envIssuingDate),
+            envEndDate = DateCompact(envEndDate),
             holderCompany = 7,
             holderIdNumber = 8)
 
-    val content = CardEnvironmentHolderParser().generate(environment)
+    val content = EnvironmentHolderStructureParser().generate(environment)
 
     assertThat(BytesUtils.bytesToString(content)).isEqualTo(DATA_ENV_1)
   }
@@ -74,12 +75,12 @@ class CardEnvironmentHolderParserTest {
     val environment = envParser.parse(content)
 
     assertThat(environment).isNotNull
-    assertThat(environment.envVersionNumber).isEqualTo(1)
+    assertThat(environment.envVersionNumber).isEqualTo(VersionNumber.CURRENT_VERSION)
     assertThat(environment.envApplicationNumber).isEqualTo(1)
-    assertThat(environment.envIssuingDate).isEqualTo(4031)
-    assertThat(environment.envEndDate).isEqualTo(6222)
-    assertThat(environment.getEnvIssuingDateAsDate()).isEqualTo(sdf.parse("14/01/2021"))
-    assertThat(environment.getEnvEndDateAsDate()).isEqualTo(sdf.parse("14/01/2027"))
+    assertThat(environment.envIssuingDate.value).isEqualTo(4031)
+    assertThat(environment.envEndDate.value).isEqualTo(6222)
+    assertThat(environment.envIssuingDate.date).isEqualTo(sdf.parse("14/01/2021"))
+    assertThat(environment.envEndDate.date).isEqualTo(sdf.parse("14/01/2027"))
     assertThat(environment.holderCompany).isZero
     assertThat(environment.holderIdNumber).isZero
   }
@@ -97,32 +98,32 @@ class CardEnvironmentHolderParserTest {
     val envEndDate = calendar.time
 
     val environment =
-        CardEnvironmentHolder(
-            envVersionNumber = 1,
+        EnvironmentHolderStructure(
+            envVersionNumber = VersionNumber.CURRENT_VERSION,
             envApplicationNumber = 1,
-            envIssuingDate = DateUtil.dateToDateCompact(envIssuingDate),
-            envEndDate = DateUtil.dateToDateCompact(envEndDate),
+            envIssuingDate = DateCompact(envIssuingDate),
+            envEndDate = DateCompact(envEndDate),
             holderIdNumber = 0,
             holderCompany = 0)
 
     assertThat(environment).isNotNull
-    assertThat(environment.envVersionNumber).isEqualTo(1)
+    assertThat(environment.envVersionNumber).isEqualTo(VersionNumber.CURRENT_VERSION)
     assertThat(environment.envApplicationNumber).isEqualTo(1)
-    assertThat(environment.envIssuingDate).isEqualTo(4031)
-    assertThat(environment.envEndDate).isEqualTo(6222)
-    assertThat(environment.getEnvIssuingDateAsDate()).isEqualTo(sdf.parse("14/01/2021"))
-    assertThat(environment.getEnvEndDateAsDate()).isEqualTo(sdf.parse("14/01/2027"))
+    assertThat(environment.envIssuingDate.value).isEqualTo(4031)
+    assertThat(environment.envEndDate.value).isEqualTo(6222)
+    assertThat(environment.envIssuingDate.date).isEqualTo(sdf.parse("14/01/2021"))
+    assertThat(environment.envEndDate.date).isEqualTo(sdf.parse("14/01/2027"))
     assertThat(environment.holderCompany).isZero
     assertThat(environment.holderIdNumber).isZero
 
-    val content = CardEnvironmentHolderParser().generate(environment)
+    val content = EnvironmentHolderStructureParser().generate(environment)
 
     assertThat(BytesUtils.bytesToString(content)).isEqualTo(DATA_ENV_2)
   }
 
   companion object {
     private const val DATA_ENV_1 =
-        "09 00 00 00 01 0F FB 1C 92 07 00 00 00 08 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        "01 00 00 00 01 0F FB 1C 92 07 00 00 00 08 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
 
     private const val DATA_ENV_2 =
         "01 00 00 00 01 0F BF 18 4E 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"

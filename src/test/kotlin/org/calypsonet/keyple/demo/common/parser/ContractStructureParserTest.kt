@@ -15,30 +15,30 @@ import fr.devnied.bitlib.BytesUtils
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import org.assertj.core.api.Assertions.assertThat
-import org.calypsonet.keyple.demo.common.parser.model.CardContract
-import org.calypsonet.keyple.demo.common.parser.model.constant.ContractPriority
-import org.calypsonet.keyple.demo.common.parser.model.constant.VersionNumber
-import org.calypsonet.keyple.demo.common.parser.util.DateUtil
+import org.calypsonet.keyple.demo.common.model.ContractStructure
+import org.calypsonet.keyple.demo.common.model.type.DateCompact
+import org.calypsonet.keyple.demo.common.model.type.PriorityCode
+import org.calypsonet.keyple.demo.common.model.type.VersionNumber
 import org.junit.jupiter.api.Test
 
-class CardContractParserTest {
+class ContractStructureParserTest {
 
-  private val cardContractParser = CardContractParser()
+  private val contractStructureParser = ContractStructureParser()
   private val sdf: SimpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
 
   @Test
   fun parseContract1() {
     val content = BytesUtils.fromString(DATA_CONTRACT_1)
 
-    val contract = cardContractParser.parse(content)
+    val contract = contractStructureParser.parse(content)
 
     assertThat(contract).isNotNull
     assertThat(contract.contractVersionNumber).isEqualTo(VersionNumber.CURRENT_VERSION)
-    assertThat(contract.contractTariff).isEqualTo(ContractPriority.SEASON_PASS)
-    assertThat(contract.contractSaleDate).isEqualTo(4031)
-    assertThat(contract.contractValidityEndDate).isEqualTo(4061)
-    assertThat(contract.getContractSaleDateAsDate()).isEqualTo(sdf.parse("14/01/2021"))
-    assertThat(contract.getContractValidityEndDateAsDate()).isEqualTo(sdf.parse("13/02/2021"))
+    assertThat(contract.contractTariff).isEqualTo(PriorityCode.SEASON_PASS)
+    assertThat(contract.contractSaleDate.value).isEqualTo(4031)
+    assertThat(contract.contractValidityEndDate.value).isEqualTo(4061)
+    assertThat(contract.contractSaleDate.date).isEqualTo(sdf.parse("14/01/2021"))
+    assertThat(contract.contractValidityEndDate.date).isEqualTo(sdf.parse("13/02/2021"))
     assertThat(contract.contractSaleSam).isZero
     assertThat(contract.contractSaleCounter).isZero
     assertThat(contract.contractAuthKvc).isZero
@@ -57,18 +57,18 @@ class CardContractParserTest {
     calendar.set(Calendar.DAY_OF_MONTH, 13)
     val contractValidityEndDate = calendar.time
 
-    val cardContract =
-        CardContract(
+    val contractStructure =
+        ContractStructure(
             contractVersionNumber = VersionNumber.CURRENT_VERSION,
-            contractTariff = ContractPriority.SEASON_PASS,
-            contractSaleDate = DateUtil.dateToDateCompact(contractSaleDate),
-            contractValidityEndDate = DateUtil.dateToDateCompact(contractValidityEndDate),
+            contractTariff = PriorityCode.SEASON_PASS,
+            contractSaleDate = DateCompact(contractSaleDate),
+            contractValidityEndDate = DateCompact(contractValidityEndDate),
             contractSaleSam = 0,
             contractSaleCounter = 0,
             contractAuthKvc = 0,
             contractAuthenticator = 0)
 
-    val content = CardContractParser().generate(cardContract)
+    val content = ContractStructureParser().generate(contractStructure)
 
     assertThat(BytesUtils.bytesToString(content)).isEqualTo(DATA_CONTRACT_1)
   }

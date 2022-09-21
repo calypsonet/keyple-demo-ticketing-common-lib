@@ -15,35 +15,36 @@ import fr.devnied.bitlib.BytesUtils
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import org.assertj.core.api.Assertions.assertThat
-import org.calypsonet.keyple.demo.common.parser.model.CardEvent
-import org.calypsonet.keyple.demo.common.parser.model.constant.ContractPriority
-import org.calypsonet.keyple.demo.common.parser.util.DateUtil
+import org.calypsonet.keyple.demo.common.model.EventStructure
+import org.calypsonet.keyple.demo.common.model.type.DateCompact
+import org.calypsonet.keyple.demo.common.model.type.PriorityCode
+import org.calypsonet.keyple.demo.common.model.type.TimeCompact
+import org.calypsonet.keyple.demo.common.model.type.VersionNumber
 import org.junit.jupiter.api.Test
 
-class CardEventParserTest {
+class EventStructureParserTest {
 
-  private val cardEventParser = CardEventParser()
+  private val eventStructureParser = EventStructureParser()
   private val sdf: SimpleDateFormat = SimpleDateFormat("dd/MM/yyyy_HH:mm:ss")
 
   @Test
   fun parseEvent1() {
     val content = BytesUtils.fromString(DATA_EVENT_1)
 
-    val event = cardEventParser.parse(content)
+    val event = eventStructureParser.parse(content)
 
     assertThat(event).isNotNull
-    assertThat(event.eventVersionNumber).isEqualTo(1)
-    assertThat(event.eventDateStamp).isEqualTo(4031)
-    assertThat(event.eventTimeStamp).isEqualTo(840)
-    assertThat(event.getEventDateStampAsDate()).isEqualTo(sdf.parse("14/01/2021_00:00:00"))
-    assertThat(event.getEventTimeStampAsDate()).isEqualTo(sdf.parse("01/01/2010_14:00:00"))
-    assertThat(event.getEventDate()).isEqualTo(sdf.parse("14/01/2021_14:00:00"))
+    assertThat(event.eventVersionNumber).isEqualTo(VersionNumber.CURRENT_VERSION)
+    assertThat(event.eventDateStamp.value).isEqualTo(4031)
+    assertThat(event.eventTimeStamp.value).isEqualTo(840)
+    assertThat(event.eventDateStamp.date).isEqualTo(sdf.parse("14/01/2021_00:00:00"))
+    assertThat(event.eventDatetime).isEqualTo(sdf.parse("14/01/2021_14:00:00"))
     assertThat(event.eventLocation).isEqualTo(1)
     assertThat(event.eventContractUsed).isEqualTo(1)
-    assertThat(event.contractPriority1).isEqualTo(ContractPriority.SEASON_PASS)
-    assertThat(event.contractPriority2).isEqualTo(ContractPriority.FORBIDDEN)
-    assertThat(event.contractPriority3).isEqualTo(ContractPriority.FORBIDDEN)
-    assertThat(event.contractPriority4).isEqualTo(ContractPriority.FORBIDDEN)
+    assertThat(event.contractPriority1).isEqualTo(PriorityCode.SEASON_PASS)
+    assertThat(event.contractPriority2).isEqualTo(PriorityCode.FORBIDDEN)
+    assertThat(event.contractPriority3).isEqualTo(PriorityCode.FORBIDDEN)
+    assertThat(event.contractPriority4).isEqualTo(PriorityCode.FORBIDDEN)
   }
 
   @Test
@@ -54,19 +55,19 @@ class CardEventParserTest {
     calendar.set(Calendar.MILLISECOND, 0)
     val eventDate = calendar.time
 
-    val cardEvent =
-        CardEvent(
-            eventVersionNumber = 1,
-            eventDateStamp = DateUtil.dateToDateCompact(eventDate),
-            eventTimeStamp = DateUtil.dateToTimeCompact(eventDate),
+    val eventStructure =
+        EventStructure(
+            eventVersionNumber = VersionNumber.CURRENT_VERSION,
+            eventDateStamp = DateCompact(eventDate),
+            eventTimeStamp = TimeCompact(eventDate),
             eventLocation = 1,
             eventContractUsed = 1,
-            contractPriority1 = ContractPriority.SEASON_PASS,
-            contractPriority2 = ContractPriority.FORBIDDEN,
-            contractPriority3 = ContractPriority.FORBIDDEN,
-            contractPriority4 = ContractPriority.FORBIDDEN)
+            contractPriority1 = PriorityCode.SEASON_PASS,
+            contractPriority2 = PriorityCode.FORBIDDEN,
+            contractPriority3 = PriorityCode.FORBIDDEN,
+            contractPriority4 = PriorityCode.FORBIDDEN)
 
-    val content = CardEventParser().generate(cardEvent)
+    val content = EventStructureParser().generate(eventStructure)
 
     assertThat(BytesUtils.bytesToString(content)).isEqualTo(DATA_EVENT_1)
   }

@@ -13,25 +13,25 @@ package org.calypsonet.keyple.demo.common.parser
 
 import fr.devnied.bitlib.BytesUtils
 import org.assertj.core.api.Assertions.assertThat
-import org.calypsonet.keyple.demo.common.parser.model.CardCounter
+import org.calypsonet.keyple.demo.common.model.CounterStructure
 import org.junit.jupiter.api.Test
 
-class CardCounterParserTest {
+class CounterStructureParserTest {
 
-  private val cardCounterParser = CardCounterParser()
+  private val counterStructureParser = CounterStructureParser()
 
   @Test
   fun parseContract1() {
     val content = BytesUtils.fromString(DATA_COUNTER_1)
-    val counter = cardCounterParser.parse(content)
+    val counter = counterStructureParser.parse(content)
     assertThat(counter).isNotNull
     assertThat(counter.counterValue).isEqualTo(10)
   }
 
   @Test
   fun generateContract1() {
-    val cardCounter = CardCounter(counterValue = 10)
-    val content = CardCounterParser().generate(cardCounter)
+    val counterStructure = CounterStructure(counterValue = 10)
+    val content = CounterStructureParser().generate(counterStructure)
     assertThat(BytesUtils.bytesToString(content)).isEqualTo(DATA_COUNTER_1)
   }
 

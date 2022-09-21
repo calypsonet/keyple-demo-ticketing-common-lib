@@ -9,22 +9,17 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ************************************************************************************** */
-package org.calypsonet.keyple.demo.common.parser.model.constant
+package org.calypsonet.keyple.demo.common.model
 
-enum class VersionNumber constructor(val key: Int, val value: String) {
-  UNDEFINED(0, "Undefined (Forbidden)"),
-  CURRENT_VERSION(1, "Current version"),
-  RESERVED(255, "Reserved (Forbidden)"),
-  UNKNOWN(-1, "Unknown");
+import java.io.Serializable
+import org.calypsonet.keyple.demo.common.model.type.DateCompact
+import org.calypsonet.keyple.demo.common.model.type.VersionNumber
 
-  companion object {
-    fun findEnumByKey(key: Int): VersionNumber {
-      for (versionNumber in values()) {
-        if (versionNumber.key == key) {
-          return versionNumber
-        }
-      }
-      return UNKNOWN
-    }
-  }
-}
+data class EnvironmentHolderStructure(
+    val envVersionNumber: VersionNumber,
+    val envApplicationNumber: Int,
+    val envIssuingDate: DateCompact,
+    val envEndDate: DateCompact,
+    val holderCompany: Int?,
+    val holderIdNumber: Int?
+) : Serializable

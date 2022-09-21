@@ -33,6 +33,10 @@ dependencies {
     testImplementation("org.assertj:assertj-core:3.15.0")
     testImplementation("com.github.devnied:bit-lib4j:1.4.5")
 }
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //  TASKS CONFIGURATION

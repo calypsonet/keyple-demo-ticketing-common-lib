@@ -13,34 +13,20 @@ package org.calypsonet.keyple.demo.common.parser
 
 import fr.devnied.bitlib.BitUtils
 import java.math.BigInteger
-import org.calypsonet.keyple.demo.common.parser.model.CardCounter
+import org.calypsonet.keyple.demo.common.model.CounterStructure
 
-class CardCounterParser : Parser<CardCounter> {
+class CounterStructureParser : Parser<CounterStructure> {
 
-  override fun parse(content: ByteArray): CardCounter {
-
+  override fun parse(content: ByteArray): CounterStructure {
     val bitUtils = BitUtils(content)
-    bitUtils.currentBitIndex = 0
-
-    /*
-     * counterValue
-     */
     val counterValue = bitUtils.getNextInteger(COUNTER_SIZE)
-
-    return CardCounter(counterValue = counterValue)
+    return CounterStructure(counterValue = counterValue)
   }
 
-  override fun generate(content: CardCounter): ByteArray {
-
+  override fun generate(content: CounterStructure): ByteArray {
     val bitUtils = BitUtils(COUNTER_SIZE)
-    bitUtils.currentBitIndex = 0
-
-    /*
-     * counterValue
-     */
     bitUtils.setNextByte(
         BigInteger.valueOf(content.counterValue.toLong()).toByteArray(), COUNTER_SIZE)
-
     return bitUtils.data
   }
 

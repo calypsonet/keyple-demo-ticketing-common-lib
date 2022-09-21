@@ -9,11 +9,22 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ************************************************************************************** */
-package org.calypsonet.keyple.demo.common.parser.model
+package org.calypsonet.keyple.demo.common.model.type
 
-data class Card(
-    val cardEnvironmentHolder: CardEnvironmentHolder,
-    val cardContracts: MutableList<CardContract>,
-    val cardEvents: MutableList<CardEvent>,
-    val cardCounter: CardCounter?
-)
+enum class VersionNumber constructor(val key: Int, val value: String) {
+  UNDEFINED(0, "Forbidden (undefined)"),
+  CURRENT_VERSION(1, "Current version"),
+  RESERVED(255, "Forbidden (reserved)"),
+  UNKNOWN(-1, "Unknown");
+
+  companion object {
+    fun findEnumByKey(key: Int): VersionNumber {
+      for (versionNumber in values()) {
+        if (versionNumber.key == key) {
+          return versionNumber
+        }
+      }
+      return UNKNOWN
+    }
+  }
+}
