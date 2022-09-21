@@ -11,11 +11,5 @@
  ************************************************************************************** */
 package org.calypsonet.keyple.demo.common.dto
 
-class CardIssuanceOutputDto {
-  /**
-   * Status code
-   * - 0 if successful
-   * - 1 if error
-   */
-  var statusCode: Int? = null
-}
+/** - statusCode: 0 (if successful), 1 (if error). */
+data class CardIssuanceOutputDto(var statusCode: Int?)

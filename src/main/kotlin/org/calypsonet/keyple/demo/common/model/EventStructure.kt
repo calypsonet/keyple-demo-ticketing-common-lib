@@ -19,16 +19,15 @@ import org.calypsonet.keyple.demo.common.model.type.TimeCompact
 import org.calypsonet.keyple.demo.common.model.type.VersionNumber
 
 class EventStructure(
-    val eventVersionNumber: VersionNumber,
-    val eventDateStamp: DateCompact,
-    val eventTimeStamp: TimeCompact,
-    val eventLocation: Int,
-    val eventContractUsed: Int,
-    val contractPriority1: PriorityCode,
-    val contractPriority2: PriorityCode,
-    val contractPriority3: PriorityCode,
-    val contractPriority4: PriorityCode
+    var eventVersionNumber: VersionNumber,
+    var eventDateStamp: DateCompact,
+    var eventTimeStamp: TimeCompact,
+    var eventLocation: Int,
+    var eventContractUsed: Int,
+    var contractPriority1: PriorityCode,
+    var contractPriority2: PriorityCode,
+    var contractPriority3: PriorityCode,
+    var contractPriority4: PriorityCode
 ) : Serializable {
-
   val eventDatetime: Date = Date(eventDateStamp.date.time + (eventTimeStamp.value * 1000 * 60))
 }

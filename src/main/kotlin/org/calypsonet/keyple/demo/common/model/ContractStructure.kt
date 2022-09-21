@@ -17,14 +17,14 @@ import org.calypsonet.keyple.demo.common.model.type.PriorityCode
 import org.calypsonet.keyple.demo.common.model.type.VersionNumber
 
 data class ContractStructure(
-    val contractVersionNumber: VersionNumber,
-    val contractTariff: PriorityCode,
-    val contractSaleDate: DateCompact,
-    val contractValidityEndDate: DateCompact,
-    val contractSaleSam: Int?,
-    val contractSaleCounter: Int?,
-    val contractAuthKvc: Int?,
-    val contractAuthenticator: Int?
+    var contractVersionNumber: VersionNumber,
+    var contractTariff: PriorityCode,
+    var contractSaleDate: DateCompact,
+    var contractValidityEndDate: DateCompact,
+    var contractSaleSam: Int?,
+    var contractSaleCounter: Int?,
+    var contractAuthKvc: Int?,
+    var contractAuthenticator: Int?
 ) : Serializable {
   var counterValue: Int? = null
 }

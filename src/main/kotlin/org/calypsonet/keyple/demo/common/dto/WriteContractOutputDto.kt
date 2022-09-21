@@ -11,13 +11,8 @@
  ************************************************************************************** */
 package org.calypsonet.keyple.demo.common.dto
 
-class WriteContractOutputDto {
-  /**
-   * Status code
-   * - 0 successful
-   * - 1 server is not ready
-   * - 2 card rejected
-   * - 3 please present the same card
-   */
-  var statusCode: Int? = null
-}
+/**
+ * - statusCode: 0 (successful), 1 (server is not ready), 2 (card rejected), 3 (please present the
+ * same card).
+ */
+data class WriteContractOutputDto(var statusCode: Int?)

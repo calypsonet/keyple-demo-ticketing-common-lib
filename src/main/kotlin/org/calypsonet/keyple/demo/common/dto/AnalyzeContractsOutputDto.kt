@@ -13,16 +13,12 @@ package org.calypsonet.keyple.demo.common.dto
 
 import org.calypsonet.keyple.demo.common.model.ContractStructure
 
-class AnalyzeContractsOutputDto {
-
-  /** List of contracts present in the card. Each contract is tied to a counter by its index. */
-  var validContracts: List<ContractStructure>? = null
-
-  /**
-   * Status code
-   * - 0 if successful
-   * - 1 server is not ready
-   * - 2 card rejected
-   */
-  var statusCode: Int? = null
-}
+/**
+ * - validContracts: List of contracts present in the card. Each contract is tied to a counter by
+ * its index.
+ * - statusCode: 0 (if successful), 1 (server is not ready), 2 (card rejected).
+ */
+data class AnalyzeContractsOutputDto(
+    var validContracts: List<ContractStructure>?,
+    var statusCode: Int?
+)
