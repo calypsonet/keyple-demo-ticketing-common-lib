@@ -31,7 +31,7 @@ object CardConstant {
   const val SFI_ENVIRONMENT_AND_HOLDER = 0x07.toByte()
   const val SFI_EVENTS_LOG = 0x08.toByte()
   const val SFI_CONTRACTS = 0x09.toByte()
-  const val SFI_COUNTER = 0x19.toByte()
+  const val SFI_COUNTERS = 0x19.toByte()
 
   const val DEFAULT_KIF_PERSONALIZATION = 0x21.toByte()
   const val DEFAULT_KIF_LOAD = 0x27.toByte()
