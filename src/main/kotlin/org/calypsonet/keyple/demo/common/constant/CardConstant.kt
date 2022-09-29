@@ -26,7 +26,6 @@ object CardConstant {
   val DFNAME_CD_LIGHT_GTML: ByteArray = HexUtil.toByteArray("315449432E49434131")
   val DFNAME_CALYPSO_LIGHT: ByteArray = HexUtil.toByteArray("315449432E49434133")
   val DFNAME_NORMALIZED_IDF: ByteArray = HexUtil.toByteArray("A0000004040125090101")
-  val DFNAME_NAVIGO_2013: ByteArray = HexUtil.toByteArray("A00000040401250901")
 
   const val SFI_ENVIRONMENT_AND_HOLDER = 0x07.toByte()
   const val SFI_EVENTS_LOG = 0x08.toByte()

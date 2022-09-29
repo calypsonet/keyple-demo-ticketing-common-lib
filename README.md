@@ -15,11 +15,11 @@ This library is used by the following demos:
 
 The demos works with the cards provided in the [Test kit](https://calypsonet.org/technical-support-documentation/)
 
-This demo can be used with Calypso cards with the following configurations:
-* AID 315449432E49434131h - File Structure 05h (CD Light/GTML Compatibility)
-* AID 315449432E49434131h - File Structure 02h (Revision 2 Minimum with MF files)
-* AID 315449432E49434133h - File Structure 32h (Calypso Light Classic)
-* AID A0000004040125090101h - File Structure 05h (CD Light/GTML Compatibility)
+This demo can be used with Calypso cards with the following card application identifiers:
+* AID A000000291FF9101 - Keyple Generic test card
+* AID 315449432E49434131 - CD Light/GTML Compatibility
+* AID 315449432E49434133 - Calypso Light
+* AID A0000004040125090101 - Navigo IDF
 
 ## Data Structures
 
