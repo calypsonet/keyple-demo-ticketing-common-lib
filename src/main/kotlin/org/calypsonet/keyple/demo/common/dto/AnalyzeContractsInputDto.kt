@@ -11,4 +11,4 @@
  ************************************************************************************** */
 package org.calypsonet.keyple.demo.common.dto
 
-data class AnalyzeContractsInputDto(var pluginType: String?)
+data class AnalyzeContractsInputDto(var pluginType: String)

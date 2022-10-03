@@ -15,4 +15,4 @@ package org.calypsonet.keyple.demo.common.dto
  * - statusCode: 0 (successful), 1 (server is not ready), 2 (card rejected), 3 (please present the
  * same card).
  */
-data class WriteContractOutputDto(var statusCode: Int?)
+data class WriteContractOutputDto(var statusCode: Int)

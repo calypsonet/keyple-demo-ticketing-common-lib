@@ -19,6 +19,6 @@ import org.calypsonet.keyple.demo.common.model.ContractStructure
  * - statusCode: 0 (if successful), 1 (server is not ready), 2 (card rejected).
  */
 data class AnalyzeContractsOutputDto(
-    var validContracts: List<ContractStructure>?,
-    var statusCode: Int?
+    var validContracts: List<ContractStructure>,
+    var statusCode: Int
 )
