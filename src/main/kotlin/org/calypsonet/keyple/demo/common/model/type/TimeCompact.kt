@@ -11,30 +11,20 @@
  ************************************************************************************** */
 package org.calypsonet.keyple.demo.common.model.type
 
+import java.time.LocalDateTime
 import java.util.*
 
 /** Time in minutes, value = hour * 60 + minute (0 to 1,439). */
 class TimeCompact {
 
-  companion object {
-    private const val NB_MILLIS_PER_MINUTE: Long = 1000 * 60
-  }
+  val value: Long
 
-  val value: Int
-
-  constructor(value: Int) {
+  constructor(value: Long) {
     this.value = value
   }
 
-  constructor(date: Date) {
-    val calendar = Calendar.getInstance()
-    calendar.time = date
-    calendar.set(Calendar.HOUR_OF_DAY, 0)
-    calendar.set(Calendar.MINUTE, 0)
-    calendar.set(Calendar.SECOND, 0)
-    calendar.set(Calendar.MILLISECOND, 0)
-    val startDate = calendar.time
-    this.value = ((date.time - startDate.time) / (NB_MILLIS_PER_MINUTE)).toInt()
+  constructor(date: LocalDateTime) {
+    this.value = (date.minute + (date.hour * 60)).toLong()
   }
 
   override fun equals(other: Any?): Boolean {
@@ -46,7 +36,7 @@ class TimeCompact {
   }
 
   override fun hashCode(): Int {
-    return value
+    return value.hashCode()
   }
 
   override fun toString(): String {
