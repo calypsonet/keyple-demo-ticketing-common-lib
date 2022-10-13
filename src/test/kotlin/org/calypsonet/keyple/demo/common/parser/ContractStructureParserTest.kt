@@ -13,6 +13,7 @@ package org.calypsonet.keyple.demo.common.parser
 
 import fr.devnied.bitlib.BytesUtils
 import java.time.LocalDate
+import java.time.Month
 import org.assertj.core.api.Assertions.assertThat
 import org.calypsonet.keyple.demo.common.model.ContractStructure
 import org.calypsonet.keyple.demo.common.model.type.DateCompact
@@ -35,8 +36,10 @@ class ContractStructureParserTest {
     assertThat(contract.contractTariff).isEqualTo(PriorityCode.SEASON_PASS)
     assertThat(contract.contractSaleDate.value).isEqualTo(4031)
     assertThat(contract.contractValidityEndDate.value).isEqualTo(4061)
-    assertThat(contract.contractSaleDate.date).isEqualTo(LocalDate.of(2021, 1, 14))
-    assertThat(contract.contractValidityEndDate.date).isEqualTo(LocalDate.of(2021, 2, 13))
+    assertThat(contract.contractSaleDate.date)
+        .isEqualTo(LocalDate.of(2021, Month.JANUARY.value, 14))
+    assertThat(contract.contractValidityEndDate.date)
+        .isEqualTo(LocalDate.of(2021, Month.FEBRUARY.value, 13))
     assertThat(contract.contractSaleSam).isZero
     assertThat(contract.contractSaleCounter).isZero
     assertThat(contract.contractAuthKvc).isZero
@@ -45,8 +48,8 @@ class ContractStructureParserTest {
 
   @Test
   fun generateContract1() {
-    val contractSaleDate = LocalDate.of(2021, 1, 14)
-    val contractValidityEndDate = LocalDate.of(2021, 2, 13)
+    val contractSaleDate = LocalDate.of(2021, Month.JANUARY.value, 14)
+    val contractValidityEndDate = LocalDate.of(2021, Month.FEBRUARY.value, 13)
 
     val contractStructure =
         ContractStructure(

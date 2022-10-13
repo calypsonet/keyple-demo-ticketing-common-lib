@@ -50,7 +50,7 @@ class EventStructureParserTest {
 
   @Test
   fun generateEvent1() {
-    val eventDate = LocalDateTime.of(2021, 1, 14, 14, 0, 0)
+    val eventDate = LocalDateTime.of(2021, Month.JANUARY.value, 14, 14, 0, 0)
 
     val eventStructure =
         EventStructure(

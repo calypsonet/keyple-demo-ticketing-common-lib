@@ -43,8 +43,8 @@ class EnvironmentHolderStructureParserTest {
 
   @Test
   fun generateEnv1() {
-    val envIssuingDate = LocalDate.of(2021, 3, 15)
-    val envEndDate = LocalDate.of(2030, 1, 10)
+    val envIssuingDate = LocalDate.of(2021, Month.MARCH.value, 15)
+    val envEndDate = LocalDate.of(2030, Month.JANUARY.value, 10)
 
     val environment =
         EnvironmentHolderStructure(
@@ -80,8 +80,8 @@ class EnvironmentHolderStructureParserTest {
 
   @Test
   fun generateEnv2() {
-    val envIssuingDate = LocalDate.of(2021, 1, 14)
-    val envEndDate = LocalDate.of(2027, 1, 14)
+    val envIssuingDate = LocalDate.of(2021, Month.JANUARY.value, 14)
+    val envEndDate = LocalDate.of(2027, Month.JANUARY.value, 14)
 
     val environment =
         EnvironmentHolderStructure(
