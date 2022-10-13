@@ -12,7 +12,7 @@
 package org.calypsonet.keyple.demo.common.model
 
 import java.io.Serializable
-import java.util.Date
+import java.time.LocalDateTime
 import org.calypsonet.keyple.demo.common.model.type.DateCompact
 import org.calypsonet.keyple.demo.common.model.type.PriorityCode
 import org.calypsonet.keyple.demo.common.model.type.TimeCompact
@@ -29,5 +29,6 @@ class EventStructure(
     var contractPriority3: PriorityCode,
     var contractPriority4: PriorityCode
 ) : Serializable {
-  val eventDatetime: Date = Date(eventDateStamp.date.time + (eventTimeStamp.value * 1000 * 60))
+  val eventDatetime: LocalDateTime =
+      eventDateStamp.date.atStartOfDay().plusMinutes(eventTimeStamp.value)
 }

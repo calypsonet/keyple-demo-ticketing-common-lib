@@ -25,9 +25,9 @@ class ContractStructureParser : Parser<ContractStructure> {
     val contractVersionNumber =
         VersionNumber.findEnumByKey(bitUtils.getNextInteger(CONTRACT_VERSION_NUMBER_SIZE))
     val contractTariff = PriorityCode.findEnumByKey(bitUtils.getNextInteger(CONTRACT_TARIFF_SIZE))
-    val contractSaleDate = DateCompact(bitUtils.getNextInteger(CONTRACT_SALE_DATE_SIZE))
+    val contractSaleDate = DateCompact(bitUtils.getNextInteger(CONTRACT_SALE_DATE_SIZE).toLong())
     val contractValidityEndDate =
-        DateCompact(bitUtils.getNextInteger(CONTRACT_VALIDITY_END_DATE_SIZE))
+        DateCompact(bitUtils.getNextInteger(CONTRACT_VALIDITY_END_DATE_SIZE).toLong())
     val contractSaleSam = bitUtils.getNextInteger(CONTRACT_SALE_SAM_SIZE)
     val contractSaleCounter = bitUtils.getNextInteger(CONTRACT_SALE_COUNTER_SIZE)
     val contractAuthKvc = bitUtils.getNextInteger(CONTRACT_AUTH_KVC_SIZE)
@@ -51,10 +51,9 @@ class ContractStructureParser : Parser<ContractStructure> {
     bitUtils.setNextByte(
         BigInteger.valueOf(content.contractTariff.key.toLong()).toByteArray(), CONTRACT_TARIFF_SIZE)
     bitUtils.setNextByte(
-        BigInteger.valueOf(content.contractSaleDate.value.toLong()).toByteArray(),
-        CONTRACT_SALE_DATE_SIZE)
+        BigInteger.valueOf(content.contractSaleDate.value).toByteArray(), CONTRACT_SALE_DATE_SIZE)
     bitUtils.setNextByte(
-        BigInteger.valueOf(content.contractValidityEndDate.value.toLong()).toByteArray(),
+        BigInteger.valueOf(content.contractValidityEndDate.value).toByteArray(),
         CONTRACT_VALIDITY_END_DATE_SIZE)
     bitUtils.setNextByte(
         BigInteger.valueOf(content.contractSaleSam?.toLong() ?: 0).toByteArray(),

@@ -12,8 +12,9 @@
 package org.calypsonet.keyple.demo.common.parser
 
 import fr.devnied.bitlib.BytesUtils
-import java.text.SimpleDateFormat
-import java.util.Calendar
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.Month
 import org.assertj.core.api.Assertions.assertThat
 import org.calypsonet.keyple.demo.common.model.EventStructure
 import org.calypsonet.keyple.demo.common.model.type.DateCompact
@@ -25,7 +26,6 @@ import org.junit.jupiter.api.Test
 class EventStructureParserTest {
 
   private val eventStructureParser = EventStructureParser()
-  private val sdf: SimpleDateFormat = SimpleDateFormat("dd/MM/yyyy_HH:mm:ss")
 
   @Test
   fun parseEvent1() {
@@ -37,8 +37,9 @@ class EventStructureParserTest {
     assertThat(event.eventVersionNumber).isEqualTo(VersionNumber.CURRENT_VERSION)
     assertThat(event.eventDateStamp.value).isEqualTo(4031)
     assertThat(event.eventTimeStamp.value).isEqualTo(840)
-    assertThat(event.eventDateStamp.date).isEqualTo(sdf.parse("14/01/2021_00:00:00"))
-    assertThat(event.eventDatetime).isEqualTo(sdf.parse("14/01/2021_14:00:00"))
+    assertThat(event.eventDateStamp.date).isEqualTo(LocalDate.of(2021, Month.JANUARY.value, 14))
+    assertThat(event.eventDatetime)
+        .isEqualTo(LocalDateTime.of(2021, Month.JANUARY.value, 14, 14, 0, 0))
     assertThat(event.eventLocation).isEqualTo(1)
     assertThat(event.eventContractUsed).isEqualTo(1)
     assertThat(event.contractPriority1).isEqualTo(PriorityCode.SEASON_PASS)
@@ -49,16 +50,12 @@ class EventStructureParserTest {
 
   @Test
   fun generateEvent1() {
-    val calendar = Calendar.getInstance()
-
-    calendar.set(2021, Calendar.JANUARY, 14, 14, 0, 0)
-    calendar.set(Calendar.MILLISECOND, 0)
-    val eventDate = calendar.time
+    val eventDate = LocalDateTime.of(2021, 1, 14, 14, 0, 0)
 
     val eventStructure =
         EventStructure(
             eventVersionNumber = VersionNumber.CURRENT_VERSION,
-            eventDateStamp = DateCompact(eventDate),
+            eventDateStamp = DateCompact(eventDate.toLocalDate()),
             eventTimeStamp = TimeCompact(eventDate),
             eventLocation = 1,
             eventContractUsed = 1,

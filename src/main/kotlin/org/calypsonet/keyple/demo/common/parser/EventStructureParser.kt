@@ -25,8 +25,8 @@ class EventStructureParser : Parser<EventStructure> {
     val bitUtils = BitUtils(content)
     val eventVersionNumber =
         VersionNumber.findEnumByKey(bitUtils.getNextInteger(EVENT_VERSION_NUMBER_SIZE))
-    val eventDateStamp = DateCompact(bitUtils.getNextInteger(EVENT_DATE_STAMP_SIZE))
-    val eventTimeStamp = TimeCompact(bitUtils.getNextInteger(EVENT_TIME_STAMP_SIZE))
+    val eventDateStamp = DateCompact(bitUtils.getNextInteger(EVENT_DATE_STAMP_SIZE).toLong())
+    val eventTimeStamp = TimeCompact(bitUtils.getNextInteger(EVENT_TIME_STAMP_SIZE).toLong())
     val eventLocation = bitUtils.getNextInteger(EVENT_LOCATION_SIZE)
     val eventContractUsed = bitUtils.getNextInteger(EVENT_CONTRACT_USED_SIZE)
     val contractPriority1 =
@@ -55,11 +55,9 @@ class EventStructureParser : Parser<EventStructure> {
         BigInteger.valueOf(content.eventVersionNumber.key.toLong()).toByteArray(),
         EVENT_VERSION_NUMBER_SIZE)
     bitUtils.setNextByte(
-        BigInteger.valueOf(content.eventDateStamp.value.toLong()).toByteArray(),
-        EVENT_DATE_STAMP_SIZE)
+        BigInteger.valueOf(content.eventDateStamp.value).toByteArray(), EVENT_DATE_STAMP_SIZE)
     bitUtils.setNextByte(
-        BigInteger.valueOf(content.eventTimeStamp.value.toLong()).toByteArray(),
-        EVENT_TIME_STAMP_SIZE)
+        BigInteger.valueOf(content.eventTimeStamp.value).toByteArray(), EVENT_TIME_STAMP_SIZE)
     bitUtils.setNextByte(
         BigInteger.valueOf(content.eventLocation.toLong()).toByteArray(), EVENT_LOCATION_SIZE)
     bitUtils.setNextByte(
