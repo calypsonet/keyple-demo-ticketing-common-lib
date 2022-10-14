@@ -12,8 +12,7 @@
 package org.calypsonet.keyple.demo.common.parser
 
 import fr.devnied.bitlib.BytesUtils
-import java.text.SimpleDateFormat
-import java.util.Calendar
+import java.time.LocalDate
 import org.assertj.core.api.Assertions.assertThat
 import org.calypsonet.keyple.demo.common.model.EnvironmentHolderStructure
 import org.calypsonet.keyple.demo.common.model.type.DateCompact
@@ -23,7 +22,6 @@ import org.junit.jupiter.api.Test
 class EnvironmentHolderStructureParserTest {
 
   private val envParser = EnvironmentHolderStructureParser()
-  private val sdf: SimpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
 
   @Test
   fun parseEnv1() {
@@ -36,23 +34,16 @@ class EnvironmentHolderStructureParserTest {
     assertThat(environment.envApplicationNumber).isEqualTo(1)
     assertThat(environment.envIssuingDate.value).isEqualTo(4091)
     assertThat(environment.envEndDate.value).isEqualTo(7314)
-    assertThat(environment.envIssuingDate.date).isEqualTo(sdf.parse("15/03/2021"))
-    assertThat(environment.envEndDate.date).isEqualTo(sdf.parse("10/01/2030"))
+    assertThat(environment.envIssuingDate.getDate()).isEqualTo(LocalDate.of(2021, 3, 15))
+    assertThat(environment.envEndDate.getDate()).isEqualTo(LocalDate.of(2030, 1, 10))
     assertThat(environment.holderCompany).isEqualTo(7)
     assertThat(environment.holderIdNumber).isEqualTo(8)
   }
 
   @Test
   fun generateEnv1() {
-    val calendar = Calendar.getInstance()
-
-    calendar.set(2021, Calendar.MARCH, 15, 0, 0, 0)
-    calendar.set(Calendar.MILLISECOND, 0)
-    val envIssuingDate = calendar.time
-
-    calendar.set(2030, Calendar.JANUARY, 10, 0, 0, 0)
-    calendar.set(Calendar.MILLISECOND, 0)
-    val envEndDate = calendar.time
+    val envIssuingDate = LocalDate.of(2021, 3, 15)
+    val envEndDate = LocalDate.of(2030, 1, 10)
 
     val environment =
         EnvironmentHolderStructure(
@@ -79,23 +70,16 @@ class EnvironmentHolderStructureParserTest {
     assertThat(environment.envApplicationNumber).isEqualTo(1)
     assertThat(environment.envIssuingDate.value).isEqualTo(4031)
     assertThat(environment.envEndDate.value).isEqualTo(6222)
-    assertThat(environment.envIssuingDate.date).isEqualTo(sdf.parse("14/01/2021"))
-    assertThat(environment.envEndDate.date).isEqualTo(sdf.parse("14/01/2027"))
+    assertThat(environment.envIssuingDate.getDate()).isEqualTo(LocalDate.of(2021, 1, 14))
+    assertThat(environment.envEndDate.getDate()).isEqualTo(LocalDate.of(2027, 1, 14))
     assertThat(environment.holderCompany).isZero
     assertThat(environment.holderIdNumber).isZero
   }
 
   @Test
   fun generateEnv2() {
-    val calendar = Calendar.getInstance()
-
-    calendar.set(2021, Calendar.JANUARY, 14, 0, 0, 0)
-    calendar.set(Calendar.MILLISECOND, 0)
-    val envIssuingDate = calendar.time
-
-    calendar.set(2027, Calendar.JANUARY, 14, 0, 0, 0)
-    calendar.set(Calendar.MILLISECOND, 0)
-    val envEndDate = calendar.time
+    val envIssuingDate = LocalDate.of(2021, 1, 14)
+    val envEndDate = LocalDate.of(2027, 1, 14)
 
     val environment =
         EnvironmentHolderStructure(
@@ -111,8 +95,8 @@ class EnvironmentHolderStructureParserTest {
     assertThat(environment.envApplicationNumber).isEqualTo(1)
     assertThat(environment.envIssuingDate.value).isEqualTo(4031)
     assertThat(environment.envEndDate.value).isEqualTo(6222)
-    assertThat(environment.envIssuingDate.date).isEqualTo(sdf.parse("14/01/2021"))
-    assertThat(environment.envEndDate.date).isEqualTo(sdf.parse("14/01/2027"))
+    assertThat(environment.envIssuingDate.getDate()).isEqualTo(LocalDate.of(2021, 1, 14))
+    assertThat(environment.envEndDate.getDate()).isEqualTo(LocalDate.of(2027, 1, 14))
     assertThat(environment.holderCompany).isZero
     assertThat(environment.holderIdNumber).isZero
 

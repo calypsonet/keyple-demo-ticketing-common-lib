@@ -12,8 +12,7 @@
 package org.calypsonet.keyple.demo.common.parser
 
 import fr.devnied.bitlib.BytesUtils
-import java.text.SimpleDateFormat
-import java.util.Calendar
+import java.time.LocalDate
 import org.assertj.core.api.Assertions.assertThat
 import org.calypsonet.keyple.demo.common.model.ContractStructure
 import org.calypsonet.keyple.demo.common.model.type.DateCompact
@@ -24,7 +23,6 @@ import org.junit.jupiter.api.Test
 class ContractStructureParserTest {
 
   private val contractStructureParser = ContractStructureParser()
-  private val sdf: SimpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
 
   @Test
   fun parseContract1() {
@@ -37,8 +35,8 @@ class ContractStructureParserTest {
     assertThat(contract.contractTariff).isEqualTo(PriorityCode.SEASON_PASS)
     assertThat(contract.contractSaleDate.value).isEqualTo(4031)
     assertThat(contract.contractValidityEndDate.value).isEqualTo(4061)
-    assertThat(contract.contractSaleDate.date).isEqualTo(sdf.parse("14/01/2021"))
-    assertThat(contract.contractValidityEndDate.date).isEqualTo(sdf.parse("13/02/2021"))
+    assertThat(contract.contractSaleDate.getDate()).isEqualTo(LocalDate.of(2021, 1, 14))
+    assertThat(contract.contractValidityEndDate.getDate()).isEqualTo(LocalDate.of(2021, 2, 13))
     assertThat(contract.contractSaleSam).isZero
     assertThat(contract.contractSaleCounter).isZero
     assertThat(contract.contractAuthKvc).isZero
@@ -47,15 +45,8 @@ class ContractStructureParserTest {
 
   @Test
   fun generateContract1() {
-    val calendar = Calendar.getInstance()
-
-    calendar.set(2021, Calendar.JANUARY, 14, 0, 0, 0)
-    calendar.set(Calendar.MILLISECOND, 0)
-    val contractSaleDate = calendar.time
-
-    calendar.set(Calendar.MONTH, Calendar.FEBRUARY)
-    calendar.set(Calendar.DAY_OF_MONTH, 13)
-    val contractValidityEndDate = calendar.time
+    val contractSaleDate = LocalDate.of(2021, 1, 14)
+    val contractValidityEndDate = LocalDate.of(2021, 2, 13)
 
     val contractStructure =
         ContractStructure(
