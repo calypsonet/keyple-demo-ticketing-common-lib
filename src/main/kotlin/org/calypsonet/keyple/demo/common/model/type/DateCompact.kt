@@ -13,7 +13,6 @@ package org.calypsonet.keyple.demo.common.model.type
 
 import java.time.Duration
 import java.time.LocalDate
-import java.time.Month
 
 /**
  * Number of days since January 1st, 2010 (being date 0).<br> Maximum value is 16,383, last complete
@@ -22,20 +21,21 @@ import java.time.Month
 class DateCompact {
 
   companion object {
-    private val REF_DATE = LocalDate.of(2010, Month.JANUARY.value, 1)
+    private val REF_DATE = LocalDate.of(2010, 1, 1)
   }
 
-  val value: Long
-  val date: LocalDate
+  val value: Int
 
-  constructor(value: Long) {
+  constructor(value: Int) {
     this.value = value
-    this.date = REF_DATE.plusDays(value)
   }
 
   constructor(date: LocalDate) {
-    this.value = Duration.between(REF_DATE.atStartOfDay(), date.atStartOfDay()).toDays()
-    this.date = date
+    this.value = Duration.between(REF_DATE.atStartOfDay(), date.atStartOfDay()).toDays().toInt()
+  }
+
+  fun getDate(): LocalDate {
+    return REF_DATE.plusDays(value.toLong())
   }
 
   override fun equals(other: Any?): Boolean {
@@ -47,7 +47,7 @@ class DateCompact {
   }
 
   override fun hashCode(): Int {
-    return value.hashCode()
+    return value
   }
 
   override fun toString(): String {

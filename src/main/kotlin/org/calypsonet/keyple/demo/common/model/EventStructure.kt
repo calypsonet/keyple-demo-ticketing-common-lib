@@ -30,5 +30,5 @@ class EventStructure(
     var contractPriority4: PriorityCode
 ) : Serializable {
   val eventDatetime: LocalDateTime =
-      eventDateStamp.date.atStartOfDay().plusMinutes(eventTimeStamp.value)
+      eventDateStamp.getDate().atStartOfDay().plusMinutes(eventTimeStamp.value.toLong())
 }

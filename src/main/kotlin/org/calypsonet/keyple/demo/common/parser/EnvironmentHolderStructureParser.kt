@@ -23,8 +23,8 @@ class EnvironmentHolderStructureParser : Parser<EnvironmentHolderStructure> {
     val bitUtils = BitUtils(content)
     val envVersionNumber = VersionNumber.findEnumByKey(bitUtils.getNextInteger(ENV_EVN_SIZE))
     val envApplicationNumber = bitUtils.getNextInteger(ENV_AVN_SIZE)
-    val envIssuingDate = DateCompact(bitUtils.getNextInteger(ENV_ISSUING_DATE_SIZE).toLong())
-    val envEndDate = DateCompact(bitUtils.getNextInteger(ENV_END_DATE_SIZE).toLong())
+    val envIssuingDate = DateCompact(bitUtils.getNextInteger(ENV_ISSUING_DATE_SIZE))
+    val envEndDate = DateCompact(bitUtils.getNextInteger(ENV_END_DATE_SIZE))
     val holderCompany = bitUtils.getNextInteger(ENV_HOLDER_COMPANY_SIZE)
     val holderIdNumber = bitUtils.getNextInteger(ENV_HOLDER_ID_NUMBER_SIZE)
     return EnvironmentHolderStructure(
@@ -43,9 +43,10 @@ class EnvironmentHolderStructureParser : Parser<EnvironmentHolderStructure> {
     bitUtils.setNextByte(
         BigInteger.valueOf(content.envApplicationNumber.toLong()).toByteArray(), ENV_AVN_SIZE)
     bitUtils.setNextByte(
-        BigInteger.valueOf(content.envIssuingDate.value).toByteArray(), ENV_ISSUING_DATE_SIZE)
+        BigInteger.valueOf(content.envIssuingDate.value.toLong()).toByteArray(),
+        ENV_ISSUING_DATE_SIZE)
     bitUtils.setNextByte(
-        BigInteger.valueOf(content.envEndDate.value).toByteArray(), ENV_END_DATE_SIZE)
+        BigInteger.valueOf(content.envEndDate.value.toLong()).toByteArray(), ENV_END_DATE_SIZE)
     bitUtils.setNextByte(
         BigInteger.valueOf((content.holderCompany ?: 0).toLong()).toByteArray(),
         ENV_HOLDER_COMPANY_SIZE)

@@ -14,7 +14,6 @@ package org.calypsonet.keyple.demo.common.parser
 import fr.devnied.bitlib.BytesUtils
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.Month
 import org.assertj.core.api.Assertions.assertThat
 import org.calypsonet.keyple.demo.common.model.EventStructure
 import org.calypsonet.keyple.demo.common.model.type.DateCompact
@@ -37,9 +36,8 @@ class EventStructureParserTest {
     assertThat(event.eventVersionNumber).isEqualTo(VersionNumber.CURRENT_VERSION)
     assertThat(event.eventDateStamp.value).isEqualTo(4031)
     assertThat(event.eventTimeStamp.value).isEqualTo(840)
-    assertThat(event.eventDateStamp.date).isEqualTo(LocalDate.of(2021, Month.JANUARY.value, 14))
-    assertThat(event.eventDatetime)
-        .isEqualTo(LocalDateTime.of(2021, Month.JANUARY.value, 14, 14, 0, 0))
+    assertThat(event.eventDateStamp.getDate()).isEqualTo(LocalDate.of(2021, 1, 14))
+    assertThat(event.eventDatetime).isEqualTo(LocalDateTime.of(2021, 1, 14, 14, 0, 0))
     assertThat(event.eventLocation).isEqualTo(1)
     assertThat(event.eventContractUsed).isEqualTo(1)
     assertThat(event.contractPriority1).isEqualTo(PriorityCode.SEASON_PASS)
@@ -50,7 +48,7 @@ class EventStructureParserTest {
 
   @Test
   fun generateEvent1() {
-    val eventDate = LocalDateTime.of(2021, Month.JANUARY.value, 14, 14, 0, 0)
+    val eventDate = LocalDateTime.of(2021, 1, 14, 14, 0, 0)
 
     val eventStructure =
         EventStructure(

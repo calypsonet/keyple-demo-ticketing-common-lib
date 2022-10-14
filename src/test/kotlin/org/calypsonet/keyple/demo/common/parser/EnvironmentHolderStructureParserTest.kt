@@ -13,7 +13,6 @@ package org.calypsonet.keyple.demo.common.parser
 
 import fr.devnied.bitlib.BytesUtils
 import java.time.LocalDate
-import java.time.Month
 import org.assertj.core.api.Assertions.assertThat
 import org.calypsonet.keyple.demo.common.model.EnvironmentHolderStructure
 import org.calypsonet.keyple.demo.common.model.type.DateCompact
@@ -35,16 +34,16 @@ class EnvironmentHolderStructureParserTest {
     assertThat(environment.envApplicationNumber).isEqualTo(1)
     assertThat(environment.envIssuingDate.value).isEqualTo(4091)
     assertThat(environment.envEndDate.value).isEqualTo(7314)
-    assertThat(environment.envIssuingDate.date).isEqualTo(LocalDate.of(2021, Month.MARCH.value, 15))
-    assertThat(environment.envEndDate.date).isEqualTo(LocalDate.of(2030, Month.JANUARY.value, 10))
+    assertThat(environment.envIssuingDate.getDate()).isEqualTo(LocalDate.of(2021, 3, 15))
+    assertThat(environment.envEndDate.getDate()).isEqualTo(LocalDate.of(2030, 1, 10))
     assertThat(environment.holderCompany).isEqualTo(7)
     assertThat(environment.holderIdNumber).isEqualTo(8)
   }
 
   @Test
   fun generateEnv1() {
-    val envIssuingDate = LocalDate.of(2021, Month.MARCH.value, 15)
-    val envEndDate = LocalDate.of(2030, Month.JANUARY.value, 10)
+    val envIssuingDate = LocalDate.of(2021, 3, 15)
+    val envEndDate = LocalDate.of(2030, 1, 10)
 
     val environment =
         EnvironmentHolderStructure(
@@ -71,17 +70,16 @@ class EnvironmentHolderStructureParserTest {
     assertThat(environment.envApplicationNumber).isEqualTo(1)
     assertThat(environment.envIssuingDate.value).isEqualTo(4031)
     assertThat(environment.envEndDate.value).isEqualTo(6222)
-    assertThat(environment.envIssuingDate.date)
-        .isEqualTo(LocalDate.of(2021, Month.JANUARY.value, 14))
-    assertThat(environment.envEndDate.date).isEqualTo(LocalDate.of(2027, Month.JANUARY.value, 14))
+    assertThat(environment.envIssuingDate.getDate()).isEqualTo(LocalDate.of(2021, 1, 14))
+    assertThat(environment.envEndDate.getDate()).isEqualTo(LocalDate.of(2027, 1, 14))
     assertThat(environment.holderCompany).isZero
     assertThat(environment.holderIdNumber).isZero
   }
 
   @Test
   fun generateEnv2() {
-    val envIssuingDate = LocalDate.of(2021, Month.JANUARY.value, 14)
-    val envEndDate = LocalDate.of(2027, Month.JANUARY.value, 14)
+    val envIssuingDate = LocalDate.of(2021, 1, 14)
+    val envEndDate = LocalDate.of(2027, 1, 14)
 
     val environment =
         EnvironmentHolderStructure(
@@ -97,9 +95,8 @@ class EnvironmentHolderStructureParserTest {
     assertThat(environment.envApplicationNumber).isEqualTo(1)
     assertThat(environment.envIssuingDate.value).isEqualTo(4031)
     assertThat(environment.envEndDate.value).isEqualTo(6222)
-    assertThat(environment.envIssuingDate.date)
-        .isEqualTo(LocalDate.of(2021, Month.JANUARY.value, 14))
-    assertThat(environment.envEndDate.date).isEqualTo(LocalDate.of(2027, Month.JANUARY.value, 14))
+    assertThat(environment.envIssuingDate.getDate()).isEqualTo(LocalDate.of(2021, 1, 14))
+    assertThat(environment.envEndDate.getDate()).isEqualTo(LocalDate.of(2027, 1, 14))
     assertThat(environment.holderCompany).isZero
     assertThat(environment.holderIdNumber).isZero
 

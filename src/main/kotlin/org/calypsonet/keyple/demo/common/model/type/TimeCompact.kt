@@ -17,14 +17,14 @@ import java.util.*
 /** Time in minutes, value = hour * 60 + minute (0 to 1,439). */
 class TimeCompact {
 
-  val value: Long
+  val value: Int
 
-  constructor(value: Long) {
+  constructor(value: Int) {
     this.value = value
   }
 
   constructor(date: LocalDateTime) {
-    this.value = (date.minute + (date.hour * 60)).toLong()
+    this.value = (date.minute + (date.hour * 60))
   }
 
   override fun equals(other: Any?): Boolean {
@@ -36,7 +36,7 @@ class TimeCompact {
   }
 
   override fun hashCode(): Int {
-    return value.hashCode()
+    return value
   }
 
   override fun toString(): String {
