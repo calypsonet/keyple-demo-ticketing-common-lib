@@ -29,7 +29,7 @@ dependencies {
     implementation("com.github.devnied:bit-lib4j:1.4.5") {
         exclude(group = "org.slf4j")
     }
-    implementation("org.eclipse.keyple:keyple-util-java-lib:2.2.0")
+    implementation("org.eclipse.keyple:keyple-util-java-lib:2.3.0")
     testImplementation(kotlin("test"))
     testImplementation("org.assertj:assertj-core:3.15.0")
     testImplementation("com.github.devnied:bit-lib4j:1.4.5")
