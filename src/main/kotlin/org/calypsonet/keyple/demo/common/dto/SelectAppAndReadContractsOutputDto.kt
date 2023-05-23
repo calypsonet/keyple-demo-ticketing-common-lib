@@ -9,12 +9,6 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ************************************************************************************** */
-package org.calypsonet.keyple.demo.common.constant
+package org.calypsonet.keyple.demo.common.dto
 
-enum class RemoteServiceId {
-  SELECT_APP_AND_READ_CONTRACTS,
-  SELECT_APP_AND_INCREASE_CONTRACT_COUNTER,
-  CONTRACT_ANALYSIS,
-  WRITE_CONTRACT,
-  CARD_ISSUANCE
-}
+data class SelectAppAndReadContractsOutputDto(var items: List<String>, var statusCode: Int)
