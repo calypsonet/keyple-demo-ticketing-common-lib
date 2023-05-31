@@ -1,5 +1,5 @@
 /* **************************************************************************************
- * Copyright (c) 2022 Calypso Networks Association https://calypsonet.org/
+ * Copyright (c) 2023 Calypso Networks Association https://calypsonet.org/
  *
  * See the NOTICE file(s) distributed with this work for additional information
  * regarding copyright ownership.
@@ -9,12 +9,6 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ************************************************************************************** */
-package org.calypsonet.keyple.demo.common.constant
+package org.calypsonet.keyple.demo.common.dto
 
-enum class RemoteServiceId {
-  SELECT_APP_AND_READ_CONTRACTS,
-  SELECT_APP_AND_INCREASE_CONTRACT_COUNTER,
-  READ_CARD_AND_ANALYZE_CONTRACTS,
-  READ_CARD_AND_WRITE_CONTRACT,
-  PERSONALIZE_CARD
-}
+data class SelectAppAndIncreaseContractCounterInputDto(var counterIncrement: Int)
