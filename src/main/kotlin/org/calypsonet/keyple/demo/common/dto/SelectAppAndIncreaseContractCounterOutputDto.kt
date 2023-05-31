@@ -11,4 +11,4 @@
  ************************************************************************************** */
 package org.calypsonet.keyple.demo.common.dto
 
-data class SelectAppAndIncreaseContractCounterOutputDto(var statusCode: Int)
+data class SelectAppAndIncreaseContractCounterOutputDto(var statusCode: Int, var message: String)

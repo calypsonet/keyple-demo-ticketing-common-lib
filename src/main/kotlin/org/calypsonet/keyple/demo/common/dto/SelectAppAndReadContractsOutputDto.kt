@@ -11,4 +11,8 @@
  ************************************************************************************** */
 package org.calypsonet.keyple.demo.common.dto
 
-data class SelectAppAndReadContractsOutputDto(var items: List<String>, var statusCode: Int)
+data class SelectAppAndReadContractsOutputDto(
+    var items: List<String>,
+    var statusCode: Int,
+    var message: String
+)
