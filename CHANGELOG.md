@@ -5,9 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 ### Added
-- Two new services `SELECT_APP_AND_READ_CONTRACTS` and `SELECT_APP_AND_INCREASE_CONTRACT_COUNTER` to be used by
+- Added two new services `SELECT_APP_AND_READ_CONTRACTS` and `SELECT_APP_AND_INCREASE_CONTRACT_COUNTER` to be used by
 native applications using the Json API.
 - Associated DTOs.
+### Changed
+- Renamed services to use verbs.
 
 ## [1.0.0] - 2022-11-18
 This is the initial release.
