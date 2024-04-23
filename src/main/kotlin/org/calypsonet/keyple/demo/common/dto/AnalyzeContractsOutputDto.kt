@@ -15,7 +15,7 @@ import org.calypsonet.keyple.demo.common.model.ContractStructure
 
 /**
  * - validContracts: List of contracts present in the card. Each contract is tied to a counter by
- * its index.
+ *   its index.
  * - statusCode: 0 (if successful), 1 (server is not ready), 2 (card rejected).
  */
 data class AnalyzeContractsOutputDto(
