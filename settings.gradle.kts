@@ -1,3 +1,3 @@
 
-rootProject.name = "keyple-demo-common-lib"
+rootProject.name = "keyple-demo-ticketing-common-lib"
 

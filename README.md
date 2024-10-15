@@ -7,9 +7,9 @@ The demo applications are an open source project provided by [Calypso Networks A
 ## Keyple Demos
 
 This library is used by the following demos:
-* [Keyple Reload Demo](https://github.com/calypsonet/keyple-java-demo-remote)
-* [Keyple Validation Demo](https://github.com/calypsonet/keyple-android-demo-validation)
-* [Keyple Control Demo](https://github.com/calypsonet/keyple-android-demo-control)
+* [Keyple Reload Demo](https://github.com/calypsonet/keyple-demo-ticketing-reloading-remote)
+* [Keyple Validation Demo](https://github.com/calypsonet/keyple-demo-ticketing-validation-app)
+* [Keyple Control Demo](https://github.com/calypsonet/keyple-demo-ticketing-control-app)
 
 ## Calypso Card Applications
 
