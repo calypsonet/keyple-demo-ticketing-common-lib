@@ -20,7 +20,7 @@ import org.calypsonet.keyple.demo.common.model.type.PriorityCode
 import org.calypsonet.keyple.demo.common.model.type.VersionNumber
 import org.junit.jupiter.api.Test
 
-class ContractStructureParserTest {
+class ContractInfoStructureParserTest {
 
   private val contractStructureParser = ContractStructureParser()
 
