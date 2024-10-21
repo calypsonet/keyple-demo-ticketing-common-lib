@@ -24,12 +24,6 @@ jobs:
           gpg-private-key: ${{ secrets.OSSRH_GPG_SECRET_KEY }}
           gpg-passphrase: ${{ secrets.OSSRH_GPG_SECRET_PASSWORD }}
 
-      - name: Install GPG secret key
-        run: |
-          cat <(echo -e "${{ secrets.OSSRH_GPG_SECRET_KEY }}") | gpg --batch --import
-          gpg --pinentry-mode loopback --passphrase "${{ secrets.OSSRH_GPG_SECRET_PASSWORD }}" --export-secret-key 568FD16F857171A0EC6D2C40742C84722FD2B235 > ~/.gradle/maven-central.gpg
-          gpg --list-secret-keys --keyid-format LONG
-
       - name: Update permissions
         run: chmod +x ./gradlew ./.github/scripts/*.sh
 
