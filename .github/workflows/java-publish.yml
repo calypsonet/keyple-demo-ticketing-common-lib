@@ -3,8 +3,7 @@ name: Compile and Deploy Java Api to Maven Central
 on:
   push:
     branches:
-      - keyple-less-client
-  workflow_dispatch:
+      - main
 
 jobs:
   java-publish:
