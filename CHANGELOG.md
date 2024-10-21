@@ -6,8 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ## [2.0.2] - 2024-10-15
+### Added
+- New service IDs in `RemoteServiceId` for C# Keyple-less clients and Kotlin Multiplatform Keyple-less clients.
+- Introduced `SelectAppAndAnalyzeContractsInputDto` and `SelectAppAndAnalyzeContractsOutputDto` for analyzing contracts.
+- Introduced `SelectAppAndLoadContractInputDto` and `SelectAppAndLoadContractOutputDto` for loading contracts.
+- Introduced `SelectAppAndPersonalizeCardInputDto` and `SelectAppAndPersonalizeCardOutputDto` for personalizing cards.
 ### Changed
-- Rename repository and artifact from `keyple-demo-common-lib` to `keyple-demo-ticketing-common-lib`
+- Renamed repository and artifact from `keyple-demo-common-lib` to `keyple-demo-ticketing-common-lib`
+- Renamed the test class `ContractStructureParserTest` to `ContractInfoStructureParserTest` to reflect the updated class
+  name.
 
 ## [2.0.1] - 2024-04-23
 ### Upgraded
