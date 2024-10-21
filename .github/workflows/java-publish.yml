@@ -18,11 +18,21 @@ jobs:
         with:
           java-version: '11'
           distribution: 'temurin'
-          server-id: ossrh
-          server-username: ${{ secrets.OSSRH_USERNAME }}
-          server-password: ${{ secrets.OSSRH_API_TOKEN }}
-          gpg-private-key: ${{ secrets.OSSRH_GPG_SECRET_KEY }}
-          gpg-passphrase: ${{ secrets.OSSRH_GPG_SECRET_PASSWORD }}
+
+      - name: Write gradle.properties
+        run: |
+          mkdir -p ~/.gradle
+          echo "ossrhUsername=${{ secrets.OSSRH_USERNAME }}" >> ~/.gradle/gradle.properties
+          echo "ossrhPassword=${{ secrets.OSSRH_API_TOKEN }}" >> ~/.gradle/gradle.properties
+          echo "signing.keyId=${{ secrets.OSSRH_GPG_KEY_ID }}" >> ~/.gradle/gradle.properties
+          echo "signing.password=${{ secrets.OSSRH_GPG_SECRET_PASSWORD }}" >> ~/.gradle/gradle.properties
+          echo "signing.secretKeyRingFile=/home/runner/.gradle/maven-central.gpg" >> ~/.gradle/gradle.properties
+
+      - name: Install GPG secret key
+        run: |
+          cat <(echo -e "${{ secrets.OSSRH_GPG_SECRET_KEY }}") | gpg --batch --import
+          gpg --pinentry-mode loopback --passphrase "${{ secrets.OSSRH_GPG_SECRET_PASSWORD }}" --export-secret-keys > ~/.gradle/maven-central.gpg
+          gpg --list-secret-keys --keyid-format LONG
 
       - name: Update permissions
         run: chmod +x ./gradlew ./.github/scripts/*.sh
