@@ -11,4 +11,7 @@
  ************************************************************************************** */
 package org.calypsonet.keyple.demo.common.dto
 
-class SelectAppAndPersonalizeCardInputDto(var pluginType: String)
+class SelectAppAndPersonalizeCardInputDto(
+    var pluginType: String,
+    var processedCardSelectionScenarioJsonString: String? = null
+)

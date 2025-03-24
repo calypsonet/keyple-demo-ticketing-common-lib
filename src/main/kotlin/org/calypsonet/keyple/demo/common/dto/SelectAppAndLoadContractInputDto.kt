@@ -17,5 +17,6 @@ data class SelectAppAndLoadContractInputDto(
     var applicationSerialNumber: String,
     var contractTariff: PriorityCode,
     var ticketToLoad: Int,
-    var pluginType: String
+    var pluginType: String,
+    var processedCardSelectionScenarioJsonString: String? = null
 )

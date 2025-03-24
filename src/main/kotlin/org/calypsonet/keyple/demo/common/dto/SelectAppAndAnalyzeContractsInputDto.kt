@@ -11,4 +11,7 @@
  ************************************************************************************** */
 package org.calypsonet.keyple.demo.common.dto
 
-data class SelectAppAndAnalyzeContractsInputDto(var pluginType: String)
+data class SelectAppAndAnalyzeContractsInputDto(
+    var pluginType: String,
+    var processedCardSelectionScenarioJsonString: String? = null
+)

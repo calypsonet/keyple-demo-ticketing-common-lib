@@ -13,7 +13,7 @@ package org.calypsonet.keyple.demo.common.constant
 
 enum class RemoteServiceId {
 
-  // Suitable for C# Keyple-less clients
+  // Suitable for C# non-Keyple clients
   SELECT_APP_AND_READ_CONTRACTS,
   SELECT_APP_AND_INCREASE_CONTRACT_COUNTER,
 
@@ -22,7 +22,7 @@ enum class RemoteServiceId {
   READ_CARD_AND_WRITE_CONTRACT,
   PERSONALIZE_CARD,
 
-  // Suitable for Kotlin Multiplaform Keyple-less client
+  // Suitable for Kotlin Multiplatform non-Keyple client
   SELECT_APP_AND_ANALYZE_CONTRACTS,
   SELECT_APP_AND_LOAD_CONTRACT,
   SELECT_APP_AND_PERSONALIZE_CARD
