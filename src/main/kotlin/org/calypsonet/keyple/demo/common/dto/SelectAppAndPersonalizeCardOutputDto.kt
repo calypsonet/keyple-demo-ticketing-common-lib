@@ -12,7 +12,7 @@
 package org.calypsonet.keyple.demo.common.dto
 
 /**
- * - statusCode: 0 (if successful), 1 (if error).
+ * - statusCode: 0 (if successful), 1 (card communication error), >1 (other error).
  * - message: error message
  */
 data class SelectAppAndPersonalizeCardOutputDto(var statusCode: Int, var message: String)

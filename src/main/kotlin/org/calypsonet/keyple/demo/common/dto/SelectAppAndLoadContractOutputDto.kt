@@ -12,8 +12,8 @@
 package org.calypsonet.keyple.demo.common.dto
 
 /**
- * - statusCode: 0 (successful), 1 (server is not ready), 2 (card rejected), 3 (please present the
- *   same card).
+ * - statusCode: 0 (successful), 1 (card communication error), 2 (server is not ready), 3 (card
+ *   rejected), 4 (please present the same card).
  * - message: error message
  */
 data class SelectAppAndLoadContractOutputDto(var statusCode: Int, var message: String)
