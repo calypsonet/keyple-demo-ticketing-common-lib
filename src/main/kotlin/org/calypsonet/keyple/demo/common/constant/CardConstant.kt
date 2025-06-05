@@ -66,15 +66,15 @@ class CardConstant {
       return true
     }
 
-      const val SC_ENVIRONMENT_AND_HOLDER_FIRST_BLOCK = 4
-      const val SC_ENVIRONMENT_AND_HOLDER_LAST_BLOCK = 7
-      const val SC_CONTRACT_FIRST_BLOCK = 8
-      const val SC_COUNTER_LAST_BLOCK = 11
-      const val SC_EVENT_FIRST_BLOCK = 12
-      const val SC_EVENT_LAST_BLOCK = 15
+    const val SC_ENVIRONMENT_AND_HOLDER_FIRST_BLOCK = 4
+    const val SC_ENVIRONMENT_AND_HOLDER_LAST_BLOCK = 7
+    const val SC_CONTRACT_FIRST_BLOCK = 8
+    const val SC_COUNTER_LAST_BLOCK = 11
+    const val SC_EVENT_FIRST_BLOCK = 12
+    const val SC_EVENT_LAST_BLOCK = 15
 
-      const val SC_ENVIRONMENT_AND_HOLDER_SIZE_BYTES = 16
-      const val SC_CONTRACT_RECORD_SIZE_BYTES = 16
-      const val SC_EVENT_RECORD_SIZE_BYTES = 16
+    const val SC_ENVIRONMENT_AND_HOLDER_SIZE_BYTES = 16
+    const val SC_CONTRACT_RECORD_SIZE_BYTES = 16
+    const val SC_EVENT_RECORD_SIZE_BYTES = 16
   }
 }
