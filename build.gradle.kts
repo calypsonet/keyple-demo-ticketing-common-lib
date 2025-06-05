@@ -13,7 +13,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.eclipse.keyple:keyple-gradle:0.2.+") { isChanging = true }
+        classpath("org.eclipse.keyple:keyple-gradle:1.0.+") { isChanging = true }
     }
 }
 apply(plugin = "org.eclipse.keyple")
