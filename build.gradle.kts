@@ -21,7 +21,7 @@ dependencies {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-//  STANDARD CONFIGURATION FOR JAVA PROJECTS
+//  STANDARD CONFIGURATION FOR KOTLIN PROJECTS
 ///////////////////////////////////////////////////////////////////////////////
 
 if (project.hasProperty("releaseTag")) {
@@ -53,12 +53,10 @@ fun copyLicenseFiles() {
 
 tasks {
   spotless {
-    java {
-      target("src/**/*.java")
+    kotlin {
+      target("src/**/*.kt")
       licenseHeaderFile("${project.rootDir}/LICENSE_HEADER")
-      importOrder("java", "javax", "org", "com", "")
-      removeUnusedImports()
-      googleJavaFormat()
+      ktfmt()
     }
     kotlinGradle {
       target("**/*.kts")
