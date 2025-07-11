@@ -6,7 +6,7 @@ plugins {
   `maven-publish`
   signing
   id("com.diffplug.spotless") version "7.0.4"
-  id("org.jetbrains.dokka") version "1.7.0"
+  id("org.jetbrains.dokka") version "1.9.20"
 }
 
 ///////////////////////////////////////////////////////////////////////////////
