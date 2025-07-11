@@ -6,6 +6,7 @@ plugins {
   `maven-publish`
   signing
   id("com.diffplug.spotless") version "7.0.4"
+  id("org.jetbrains.dokka") version "1.7.0"
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -31,8 +32,11 @@ if (project.hasProperty("releaseTag")) {
   println("Development mode: version is ${project.version}")
 }
 
+val title: String by project
 val javaSourceLevel: String by project
 val javaTargetLevel: String by project
+val generatedOverviewFile = layout.buildDirectory.file("tmp/overview-dokka.md")
+val dokkaOutputDir = layout.buildDirectory.dir("dokkaHtml")
 
 java {
   sourceCompatibility = JavaVersion.toVersion(javaSourceLevel)
@@ -63,31 +67,40 @@ tasks {
       ktfmt()
     }
   }
-  test {
-    useJUnitPlatform()
-    testLogging { events("passed", "skipped", "failed") }
+  register("generateDokkaOverview") {
+    outputs.file(generatedOverviewFile)
+    doLast {
+      val file = generatedOverviewFile.get().asFile
+      file.parentFile.mkdirs()
+      file.writeText(
+          buildString {
+            appendLine("# Module $title")
+            appendLine()
+            appendLine(
+                file("src/main/kdoc/overview.md")
+                    .takeIf { it.exists() }
+                    ?.readText()
+                    .orEmpty()
+                    .trim())
+            appendLine()
+            appendLine("<br>")
+            appendLine()
+            appendLine("> ${project.findProperty("javadoc.copyright") as String}")
+          })
+    }
   }
-  javadoc {
-    dependsOn(processResources)
-    val javadocLogo = project.findProperty("javadoc.logo") as String
-    val javadocCopyright = project.findProperty("javadoc.copyright") as String
-    val titleProperty = project.findProperty("title") as String
-    (options as StandardJavadocDocletOptions).apply {
-      overview = "src/main/javadoc/overview.html"
-      windowTitle = "$titleProperty - ${project.version}"
-      header(
-          "<div style=\"margin-top: 7px\">$javadocLogo $titleProperty - ${project.version}</div>")
-      docTitle("$titleProperty - ${project.version}")
-      use(true)
-      bottom(javadocCopyright)
-      encoding = "UTF-8"
-      charSet = "UTF-8"
-      if (JavaVersion.current().isJava11Compatible) {
-        addBooleanOption("html5", true)
-        addStringOption("Xdoclint:none", "-quiet")
+  named<org.jetbrains.dokka.gradle.DokkaTask>("dokkaHtml") {
+    dependsOn("generateDokkaOverview")
+    outputDirectory.set(dokkaOutputDir.get().asFile)
+    dokkaSourceSets {
+      named("main") {
+        noAndroidSdkLink.set(false)
+        includeNonPublic.set(false)
+        includes.from(files(generatedOverviewFile))
+        moduleName.set(title)
       }
     }
-    doFirst { println("Generating Javadoc for ${project.name} version ${project.version}") }
+    doFirst { println("Generating Dokka HTML for ${project.name} version ${project.version}") }
   }
   jar {
     dependsOn(processResources)
@@ -108,23 +121,32 @@ tasks {
     }
   }
   named<Jar>("sourcesJar") {
+    dependsOn(processResources)
+    from(layout.buildDirectory.dir("resources/main"))
     doFirst { copyLicenseFiles() }
     manifest {
       attributes(
           mapOf(
-              "Implementation-Title" to "${project.findProperty("title") as String} Sources",
+              "Implementation-Title" to "$title Documentation",
               "Implementation-Version" to project.version))
     }
   }
   named<Jar>("javadocJar") {
-    dependsOn(javadoc)
+    dependsOn(dokkaHtml)
+    archiveClassifier.set("javadoc")
+    from(dokkaOutputDir)
+    from(layout.buildDirectory.dir("resources/main"))
     doFirst { copyLicenseFiles() }
     manifest {
       attributes(
           mapOf(
-              "Implementation-Title" to "${project.findProperty("title") as String} Documentation",
+              "Implementation-Title" to "$title Documentation",
               "Implementation-Version" to project.version))
     }
+  }
+  test {
+    useJUnitPlatform()
+    testLogging { events("passed", "skipped", "failed") }
   }
 }
 
